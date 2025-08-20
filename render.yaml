@@ -1,0 +1,22 @@
+# render.yaml
+
+services:
+  - type: web                         # This is a web-accessible service (HTTP)
+    name: fastapi-practice            # The name shown in the Render dashboard
+    env: python                       # Tells Render to use a Python environment
+    branch: main                      # Render will deploy from the 'main' branch of your GitHub repo
+    rootDir: .                        # Root directory of your app (adjust if your code is in a subfolder)
+
+    buildCommand: |                  # Render will run this during the build step
+      pip install --upgrade pip
+      pip install -r requirements.txt
+
+    startCommand: |                  # This command starts your FastAPI app
+      uvicorn main:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /health         # Render will hit this endpoint to check if your app is healthy
+
+    routes:                          # Optional: Rewrite all routes to `/` (mostly for frontend SPAs)
+      - type: rewrite
+        source: /*
+        destination: /
