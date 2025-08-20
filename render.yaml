@@ -15,8 +15,3 @@ services:
       uvicorn main:app --host 0.0.0.0 --port $PORT
 
     healthCheckPath: /health         # Render will hit this endpoint to check if your app is healthy
-
-    routes:                          # Optional: Rewrite all routes to `/` (mostly for frontend SPAs)
-      - type: rewrite
-        source: /*
-        destination: /
